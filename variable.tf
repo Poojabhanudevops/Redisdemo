@@ -24,7 +24,7 @@ variable "pri-sub-3-id" {
 
 variable "ami-id" {
   type = string
-  default = "ami-09b0a86a2c84101e1"
+  default = "ami-053b12d3152c0cc71"
 }
 
 variable "instance-type" {
@@ -34,5 +34,5 @@ variable "instance-type" {
 
 variable "key-name" {
   type = string
-  default = "ninja"
+  default = "redispem"
 }
