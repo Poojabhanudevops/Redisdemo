@@ -1,40 +1,54 @@
-module "vpc" {
-  source           = "./vpc"
-  vpc_cidr         = var.vpc_cidr
-  nat-gat-id       = module.subnet.nat-gat-id
-  pri-sub3-id      = module.subnet.pri-sub-3-id
-  pri-sub2-id      = module.subnet.pri-sub-2-id
-  pri-sub1-id      = module.subnet.pri-sub-1-id
-  pub-sub-id       = module.subnet.pub-sub-id
-  vpc_peering_id   = module.peering.vpc_peering_id
-  default_vpc_cidr = module.peering.default_vpc_cidr
-
+# Public EC2 Instance
+resource "aws_instance" "redis-public" {
+  ami           = var.ami-id
+  instance_type = var.instance-type
+  subnet_id     = var.pub-sub-id
+  associate_public_ip_address = "true"
+  security_groups = [var.public-sg-id]
+  key_name = var.key-name
+  tags = {
+    Name = "redis-public"
+  }
 }
 
-module "subnet" {
-  source   = "./subnets"
-  vpc_id   = module.vpc.vpc_id
-  vpc_cidr = module.vpc.vpc_cidr
+# Private EC2 1 Instance
+resource "aws_instance" "redis-private-1" {
+  ami           = var.ami-id
+  instance_type = var.instance-type
+  subnet_id     = var.pri-sub-1-id
+  associate_public_ip_address = "false"
+  security_groups = [var.private-sg-id]
+  key_name = var.key-name
+
+  tags = {
+    Name = "redis-private-1"
+  }
 }
 
-module "security_groups" {
-  source   = "./security_group"
-  vpc_id   = module.vpc.vpc_id
-  vpc_cidr = module.vpc.vpc_cidr
+# Private EC2 2 Instance
+resource "aws_instance" "redis-private-2" {
+  ami           = var.ami-id
+  instance_type = var.instance-type
+  subnet_id     = var.pri-sub-2-id
+  associate_public_ip_address = "false"
+  security_groups = [var.private-sg-id]  
+   key_name = var.key-name
+
+  tags = {
+    Name = "redis-private-2"
+  }
 }
 
-module "instance" {
-  source        = "./instances"
-  pri-sub-1-id  = module.subnet.pri-sub-1-id
-  pri-sub-2-id  = module.subnet.pri-sub-2-id
-  pri-sub-3-id  = module.subnet.pri-sub-3-id
-  pub-sub-id    = module.subnet.pub-sub-id
-  private-sg-id = module.security_groups.private-sg-id
-  public-sg-id  = module.security_groups.public-sg-id
-}
+# Private EC2 3 Instance
+resource "aws_instance" "redis-private-3" {
+  ami           = var.ami-id
+  instance_type = var.instance-type
+  subnet_id     = var.pri-sub-3-id
+  associate_public_ip_address = "false"
+  security_groups = [var.private-sg-id]
+   key_name = var.key-name
 
-module "peering" {
-  source   = "./vpc_peering"
-  vpc_id   = module.vpc.vpc_id
-  vpc_cidr = module.vpc.vpc_cidr
+  tags = {
+    Name = "redis-private-3"
+  }
 }

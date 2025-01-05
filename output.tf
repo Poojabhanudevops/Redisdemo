@@ -1,60 +1,33 @@
-output "vpc_id" {
-  value = module.vpc.vpc_id
+#instenses ID
+output "pub-instance-id" {
+  value = aws_instance.redis-public.id
 }
 
-output "public-subnet-id" {
-  value = module.subnet.pub-sub-id
-}
-
-output "private-subnet1-id" {
-  value = module.subnet.pri-sub-1-id
-}
-
-output "private-subnet2-id" {
-  value = module.subnet.pri-sub-2-id
-}
-
-output "private-subnet3-id" {
-  value = module.subnet.pri-sub-3-id
-}
-output "public-security-groups" {
-  value = module.security_groups.public-sg-id
-}
-
-output "private-security-groups" {
-  value = module.security_groups.private-sg-id
-}
-
-# Instance ID
 output "private-instance1-id" {
-  value = module.instance.private-instance1-id
+  value = aws_instance.redis-private-1.id
 }
 
 output "private-instance2-id" {
-  value = module.instance.private-instance2-id
+  value = aws_instance.redis-private-2
 }
 
 output "private-instance3-id" {
-  value = module.instance.private-instance3-id
+  value = aws_instance.redis-private-3
 }
 
-output "public-instance-id" {
-  value = module.instance.public-instance-ip
+# instences IP addresses
+output "public-instance-ip" {
+  value = aws_instance.redis-public.public_ip
 }
 
-# Instance IP Address
 output "private-instance1-ip" {
-  value = module.instance.private-instance1-ip
+  value = aws_instance.redis-private-1.private_ip
 }
-
 
 output "private-instance2-ip" {
-  value = module.instance.private-instance2-ip
+  value = aws_instance.redis-private-2.private_ip
 }
 
 output "private-instance3-ip" {
-  value = module.instance.private-instance3-ip
-}
-output "public-instance-ip" {
-  value = module.instance.public-instance-ip
+  value = aws_instance.redis-private-3.private_ip
 }
