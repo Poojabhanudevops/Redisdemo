@@ -20,7 +20,7 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd;cd terraform/ ; terraform init'
+                sh 'pwd;cd terraform/ ; terraform init -migrate-state'
                 sh 'pwd;cd terraform/ ; terraform validate'
                 sh 'pwd;cd terraform/ ; terraform plan'
             }
