@@ -12,5 +12,5 @@ compose:
    ansible_host: private_ip_address  # Uncomment if using private instances
 strict: False
 cache: True
-cache_timeout: 600  # seconds
+cache_timeout: 600 
 ansible_ssh_common_args: '-o ConnectTimeout=60'
